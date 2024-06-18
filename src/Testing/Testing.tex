@@ -1,0 +1,109 @@
+\section{Testing}
+\subsection{Introduction}
+The main goal of this project was to develop an algorithm for autonomous marking up of a dataset and create an algorithm for the detection of road markup based
+on deep learning algorithms. The specifics of the project imply a special approach to code testing, which will be discussed in this chapter. It is important to 
+notice that all parts of the project that are not machine learning algorithms were auxiliary and were run strictly under the supervision of the developer, which
+makes testing of these parts of the project not optional, but at least questionable.
+
+\subsection{Functional testing}
+\subsubsection{Machine learning algorithms automated testing}
+
+Testing is included in the mandatory pipeline for creating a machine-learning algorithm. The selection of hyperparameters described in the chapter above, 
+as well as the choice of the model architecture is based on the results of running the model on a separate part of the dataset, which was not used in training. 
+This part is called the test part.
+
+This approach allows one to achieve several goals at once:
+\begin{enumerate}
+    \item Check the performance of the algorithm, i.e.\ whether it falls on different data.
+    \item Check the compliance of the algorithm with the specified requirements for the format of input and output data
+    \item Check the correctness of the algorithms, i.e.\ how well it copes with the task.
+\end{enumerate} 
+If the first two points are checked quite easily (if the neural network does not meet the input/output requirements or crashes on some data, then the algorithm will 
+fail during the run of the test sample). The third point presupposes more complex reasoning. Since machine learning algorithms almost never give
+a truly correct answer, it is impossible to test such algorithms only for matching the correct answers. For machine learning algorithms, it is normal sometimes 
+to give incorrect answers, however, the purpose of training such algorithms is to minimize error cases. Based on this, hyperparameters and architecture are selected. 
+
+Therefore, it can be said that automated functional testing is embedded in the process of developing machine-learning algorithms and does not require additional code 
+in the form of unit tests.
+
+\textbf{EM algorithm}
+
+For the EM algorithm, things get even more complicated. Since there are no correct answers in the training sample, checking the correctness of the algorithm was impossible in
+automatical mode. Moreover, checks based on expecting the same output for the same input, can't be performed too. Since the initialization of hidden class labels in 
+the EM algorithm occurs randomly, this algorithm may give slightly different answers to the same input data and this cannot be called
+an incorrect behavior of the algorithm.
+
+\textbf{Neural networks layers unit testing}
+
+For neural networks, it is possible to write unit and integration tests when they are developed from scratch. That is, all the mathematics described in the chapters 
+above is written by the developer himself. However, this project used the PyTorch library, which provides already-written layers of neural networks. 
+Therefore, unit testing of these blocks is unnecessary.
+
+\textbf{Deliberately incorrect data}
+
+The only objective reason for creating functional tests for machine learning algorithms is to check the performance of algorithms with deliberately
+incorrect data. However, these tests were not written in this project for the following reasons:
+\begin{enumerate}
+    \item The neural network is published within the Duckietown repository, the only possible input of this algorithm is a three-channel image of 480*640 pixels. 
+    Therefore, checking the input data for compliance with the specified data type is unnecessary. If the algorithm is taken from the repository and used for other 
+    purposes, I am not responsible for this in accordance with the MIT license.
+    \item The neural network is written exclusively for recognizing road markup. If the camera of the Dackiebot is directed at something else, the neural network will not 
+    fall but will give an unpredictable result. Checking for the presence of a road in the frame could be integrated into the algorithm, however, this would increase 
+    the time cost of processing a single frame. And since Duckiebot is supposed to be used only on a landfill simulating a road, frames with such content can be obtained 
+    either as inappropriate using Duckiebot, which is not my area of responsibility, or as a result of an error that causes the bot to leave the landfill, but such cases
+    are exceptional and must be controlled by a human, which is why it was considered checking for the presence of a road to be an unnecessary complication of the algorithm, 
+    which will lead to a deterioration in operating time.
+\end{enumerate}
+
+\subsubsection{Non-machine learning algorithms automated testing}
+As it was written in the Introduction subsection all non-machine learning algorithms and applications were written only for inner use. Moreover, they were used
+only under developer control, so writing functional tests for this part of the project was unnecessary.
+
+However, one non-machine learning part was released. It was a ROS node with an implemented neural network in it. 
+But this node mostly consists of code of the old algorithm, so bugs can be only in machine learning part, but as it was written above, 
+the neural network was tested during the training phase so once again the creation
+of any automated functional tests was redundant. 
+
+\subsubsection{Manual functional testing}
+As it was written above it was decided to get rid of using an automated testing approach. However, leaving the project completely untested would be a terrible mistake.
+As a test, it was decided to do a very simple thing. Start the autopilot and look at its behavior. 
+
+As a result of this approach, minor errors were identified, which were immediately corrected. However, more significant problems with the bot have been found.
+The bot drove out of the lane in turns and also interpreted the white floor as part of the road markings, which sometimes led to unpredictable behavior.
+These errors are described in more detail in the chapter below and they will not be considered here.
+
+\subsection{Non-functional testing}
+
+\subsubsection{Introduction}
+In fact, non-functional testing has been discussed throughout this document. Since the speed of the algorithm is a key
+aspect of its development. Then the speed of the algorithm was measured many times in different conditions.
+
+\subsubsection{Speed of the algorithm}
+
+The speed of the neural network was checked at the time of its creation, in Google Colab, as well as directly on Duckiebot. Based on this data, decisions were made
+to use the torch2trt library to reduce the execution time of the data processing pipeline.
+
+Also, according to the results of the benchmarks, an interesting observation was made, despite the shared GPU and CPU memory, the torch library takes time to send data
+to the GPU memory, which looks strange. This observation paved the way for further research and development of a driver for the bot's camera so that the resulting 
+image was immediately in PyTorch-GPU-tensor format. This does not apply to the current project, but the implementation of such a driver in theory will be able 
+to speed up the algorithm's operation time by at least 3 times.
+
+\subsection{User testing}
+Since the project was a research project, it does not involve an end user. Therefore, no user testing was carried out.
+
+\subsection{Summary}
+
+\noindent At the end of the chapter, it should be noted that the testing in the project was carried out, although not in a completely ordinary execution.
+
+\noindent  In the project, it was decided to abandon unit and integration testing due to the redundancy of these tests, as well as the time to write them. 
+The neural network was tested during its training, the EM algorithm was tested during its operation, as it was launched under the supervision of the developer.
+Checking the compatibility of the algorithm with the software was carried out in real conditions, since this approach, on the one hand, does not require time to write
+testing code, and on the other hand, makes it possible to fully assess the performance of the project.
+
+\noindent Benchmarks of the operating time of the neural network, the neural network pipeline and the entire data processing pipeline were also carried out. 
+Based on these data, it was decided to use additional libraries to speed up the algorithm. The benchmark results not only helped to improve the project but also 
+laid the foundation for future developments in Duckietown.
+
+\noindent User testing was not performed due to the absence of an end user.
+
+\noindent The results of the testing phase were studied and taken into account during the development of the project.

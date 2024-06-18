@@ -1,0 +1,207 @@
+\section{Project planning}
+\subsection{Introduction}
+The project was divided into three main steps:
+\begin{enumerate}
+    \item Preparing the dataset.
+    \item Choosing and implementing deep learning model.
+    \item Deploying model on the Duckiebot.
+\end{enumerate}
+Each step was a small project with its research, implementation and evaluation. 
+\subsection{Methodology}
+\subsubsection{Intorduction}
+I haven't intentionally used any specific methodology or Agile techniques except MoSCoW, 
+because, in my opinion, it is nothing but a waste of time. However, it happened that I had some kind of scrum sprints.
+Each step described above was made as a scrum sprint of two weeks of 14 hours of work per day.
+\begin{table}[h]
+    \centering 
+    \begin{tabular}{|p{1.7cm}|p{6cm}|p{6cm}|}
+        \hline
+        Priority & Description & Result \\ \hline
+        Must & Design, develop and deploy algorithm using reinforcement learning technique for marking up dataset & Dataset collected, algorithm published \\ \hline
+        Must & Design and develop a light-insensitive and light-weight algorithm for detecting road marking & Algorithm developed and published \\ \hline
+        Should & Deploy light insensitive and light-weight algorithm for detecting road marking on Duckeibot & Algorithm deployed, full built is published  \\ \hline
+        Could & Crossroad crossing algorithm based on computer vision techniques & Algorithm hasn't been developed, 
+        but it can be after finishing all the exams. In this case, the algorithm would be published as a scientific paper \\  \hline
+        Won't be & Light-weight general-purposes line detection algorithm, which can be used for any type of road markup & Algorithm hasn't been developed and won't be
+        developed by me during spring-summer 2024\\ \hline
+    \end{tabular}
+    \caption{MoSCoW table with the results}\label{tab:MoSCoW}
+\end{table}
+\subsubsection{Preparing dataset}
+The preparation of the dataset was divided into five substeps fully described in the design and implementation chapters:
+\begin{enumerate}
+    \item Writing some utilities for getting pictures from the Duckiebot.
+    \item Collecting dataset.
+    \item Research on self-supervised learning techniques for marking up the dataset.
+    \item Creating a self-supervised learning model and pipeline for marking up the dataset.
+    \item Validation of the resulted markup by a human.
+    \item Publishing the dataset.
+\end{enumerate} 
+\subsubsection{Choosing and implementing deep learning model}
+This step was just a classical example of the creation of a DL model. So it was divided into 2 substeps:
+\begin{enumerate}
+    \item Reading articles.
+    \item Model implementation.
+\end{enumerate}
+\subsubsection{Deploying model on the Duckiebot}
+The last step of the project was also divided into 3 substeps:
+\begin{enumerate}
+    \item Running DL model on the Duckiebot.
+    \item Adjust the outputs of the model in a such way that they fit the inputs of the lane-following algorithm of the base docker image of the Duckiebot.
+    \item Evaluate the result of the deployment and the whole project.
+\end{enumerate}
+\subsection{Requirements}
+\subsubsection{Preparing dataset}
+For this part of the project, there were 2 requirements:
+\begin{enumerate}
+    \item Collect about 9000 photos for the dataset. In the flat, where the polygon was mounted, there are 2 sets of lamps, so 3000 photos per set were collected, 
+    as well as 2000 photos for the combination of the sets and 1000 photos with daylight only.
+    \item Create a self-supervised learning algorithm for marking up the dataset with an accuracy of at least 70\%. 
+\end{enumerate}
+
+The first requirement is needed to make resulted algorithm light-insensitive. With a combination of data augmentation 
+(to be more precise color and brightness shifting) the dataset collected in a such way can make the resulting DL model pretty accurate, because
+it will not rely only on the colors and brightness of pixels in its predictions (this will be shown in the implementation chapter).
+
+The second requirement was partly my interest and partly project requirements. For me, it was interesting to learn how to segment a picture on colors in different 
+light conditions. For the project, it was important to have a pretty large dataset to train the DL model on.
+
+\textbf{Human validation}
+
+As a result, of implementing this part of the project one more requirement was found. It is human validation of the dataset.
+
+Human validation is a critical step in creating a road marking dataset (even for Duckietown, which cannot harm a person), the marking of which was created automatically. 
+A human can ensure the accuracy and reliability of the data obtained, which is extremely important in the autopilot contest.
+Unlike machine learning algorithms without a teacher, people are able to recognize inaccuracies in machine markup: incorrect classification, noise and 
+other artifacts. Human verification of the markup, although it reduces the size of the dataset, improves the average quality of the markup, 
+reducing the risk of incorrect training of the neural network, and thereby improving autopilot in real conditions.
+
+Human verification reduces the overall noise of the dataset. This provides an opportunity to get better training data for deep learning algorithms.
+With careful verification, a person is able to eliminate false labeling and correct falsely labeled pixel maps, thereby ensuring semantic consistency
+throughout the dataset. This noise reduction has a beneficial effect on the training of neural networks, especially on relatively small datasets for 
+computer vision.
+
+Even though human verification entails additional financial expenses and consumes a lot of time, its necessity is priceless, especially for
+datasets on which machine learning algorithms are trained, the results of which can harm a person. Human verification allows you to overcome the limitations
+associated with automatic markup, such as false segmentation or noise, which can lead to incorrect training, and then the operation of the neural network.
+In the case of using neural networks for autopilot operation, incorrect operation of the algorithm can lead to human casualties.
+
+Last but not least. The project used human verification of automatic markup, rather than fully human markup. This approach allows, on the one hand, 
+to ensure the accuracy of the dataset, and on the other hand, it does not require resources such as completely human markup. Although this approach slightly
+reduces the size of the dataset, it is a reasonable compromise combining both human precision and the scalability that automatic markup provides.
+This approach allows, using limited resources, to create large and relatively accurate datasets, which is very important in such computer
+vision algorithms.
+
+\subsubsection{Choosing and implementing deep learning model}
+For this step, requirements were hardly evaluated, because some characteristics of the model (e.g.\ time per froward pass) are different in a training environment 
+(Gooogle Colab) and working environment (the Duckiebot). So the requirements of this part of the project can be implemented and evaluated in different steps.
+\begin{enumerate}
+    \item Model should be pretty small. I assumed the volume of all the parameters of the model can't be more than 2GB (even thou the Duckiebot has 4GB of RAM I've 
+    decided to leave some space for other parts of the OS).
+    \item Model should be fast. The forward pass of the model shouldn't take more than 20 milliseconds. This requirement is important to make enough FPS rates. 
+    I assumed that having 20 FPS is more than enough for the Duckiebot. So if the model takes 20 milliseconds and data transferring takes 30 milliseconds this will 
+    be 50 milliseconds per image which is 20 FPS.\@ In the Implementation chapter it will be described in more detail.
+\end{enumerate}
+
+\subsubsection{Deploying model on the Duckiebot}
+In this part of the project, there were no requirements in the beginning, but when during the implementation, it was figured out that this task wasn't as easy as expected.
+\begin{enumerate}
+    \item Deploy the DL model to the Duckiebot and adjust the outputs of the model in a such way that they fit the inputs of the lane-following algorithm of the base 
+    docker image of the Duckiebot. This was the only requirement at the beginning of the project.
+    \item Migrate to TensorRT SDK.\@ This requirement appeared as soon as I ran the model on the Duckiebot 
+    because without TensorRT SDK the forward pass of the model and the data transferring were much slower than I expected 
+    (in more detail it is described in the Implementation chapter).
+\end{enumerate}
+
+\subsection{Potential Solutions}
+\subsubsection{Introduction}
+There can be a lot of variants of implementation of this project. I will divide this section into two subsections:
+\begin{enumerate}
+    \item Languages and libraries to discuss choices of the languages and libraries used in the project.
+    \item Algorithms to discuss choices of the algorithms used in the project.
+\end{enumerate}
+\subsubsection{Languages and libraries}
+\begin{enumerate}
+    \item Language for the server to collect photos from the Duckiebot. Servers can be written in almost any language: Python, Java, NodeJS, etc. But I've decided 
+    to use GoLang as I'm familiar with writing servers in this language. Because the server wasn't the main part of the project, but just a utility I didn't need it to 
+    be extensible or super efficient. The only important thing about the server was quick development and GoLang can provide instruments for this in addition my knowledge
+    of this language made it the only option for this project.
+    \item Main language for the project. It's already standard for the industry to use Python as a language for the ML/DL projects~\cite{pythonForAI}, so for me, it 
+    wasn't a question of which language to use. However important to mention that sometimes ML/DL projects can be written in RLang or MATLAB, but I'm not familiar
+    with either of them, also MATLAB as far as I know isn't free to use, moreover, Duckietown uses Python as the main language. Also, it was possible to
+    consider using C++ and writing the DL model in this language, but this would increase development time because I've never worked with Torch on C++ and have 
+    no experience in developing ROS nodes for the Duckiebot in this language.
+    \item Libraries for the project. Talking about libraries it's important to mention that there are almost no analogs for the Scikit-learn library which was used 
+    for the EM algorithm. But for the DL model, there are two big analogs of the PyTorch library used in this project. These analogs are TensorFlow and JAX, which are 
+    also libraries for creating neural networks. 
+    However, I learned deep learning using PyTorch so I know this library much better than TensorFlow and JAX, moreover, the Duckietown project has no base docker images
+    with JAX or TensorFlow so these libraries weren't even considered.
+    
+\end{enumerate}
+
+\subsubsection{Algorithms}
+\begin{table}[h]
+    \centering 
+    \begin{tabular}{|c|c|}
+        \hline
+        Model & Parameters \\ \hline
+        My model & 10,5K \\ \hline
+        DeepLabV3 & 11M  \\ \hline
+        FCN & 35,3M \\  \hline
+        LRASPP & 3,2M \\ \hline
+    \end{tabular}
+    \caption{Fully implemented NN in comparison with my architecture}\label{tab:nn_arcitecture}
+\end{table}
+\begin{enumerate}
+    \item Using EM algorithm for marking up the Dataset. EM algorithm wasn't the only option for the marking up algorithm as it was described in 
+    the Background reading chapter. Also in addition to that chapter, I considered using the DBScan algorithm in combination with the `energy approach'. 
+    But the EM algorithm showed its consistency and it was decided to use it.
+    \item DL architecture also has a lot of options as was described in the Background reading chapter. But the resulting algorithm was pretty consistent, light-weighted 
+    in computational terms and had a relatively small amount of trainable parameters, so it was decided to stay on the created architecture. I thought about    using other 
+    backbones like ShuffleNet~\cite{shufflenet}, EfficientNet~\cite{efficientnet} or Visual Transformers~\cite{transformers} or even fully implemented segmentation neural
+    networks like DeepLabV3~\cite{deeplabv3}, FCN~\cite{FCN} or LRASPP~\cite{mobilenetv3}, but all these variants are either too big or too computationally heavy and do not 
+    give much better results.
+\end{enumerate}
+\subsection{Tools and Techniques}
+During this project, a lot of different tools were used:
+\begin{enumerate}
+    \item IDEs of JetBrains were used for developing:
+    \begin{enumerate}
+        \item PyCharm for Python developing.
+        \item GoLand for GoLang development.
+    \end{enumerate}
+    \item Jupiter notebooks were used for developing ML algorithms (both the EM algorithm and the DL model). For the model training, Google Colaboratory was used, 
+    because I don't have a computer with GPU to train my model on.
+    \item Also usual in development things were used in my project:
+    \begin{enumerate}
+        \item git for VCS and GitHub for publishing results.
+        \item Docker for deployment on the Duckiebot.
+    \end{enumerate}
+    \item Visual Studio Code was used for writing this report because it is written in \LaTeX. 
+\end{enumerate}
+
+\subsection{Legal, Social, and Ethical Issues}
+\subsubsection{Intorduction}
+As it was written in the technical plan (appendix 1) it is a research project with no legal, social or ethical issues. However, after the full implementation of
+the project, some things need clarification.
+\subsubsection{The dataset}
+The Dataset was collected and published under MIT license~\cite{mit}. The choice of license is so because I want the dataset to be used by other users, but
+because of autonomous marking up (even if the markup has been verified by a human), there can be some mismarked pictures, which can cause problems In training some 
+algorithms. 
+\subsubsection{The algorithm}
+The algorithm is also published under MIT license~\cite{mit}. The reason is simple. I want the algorithm to be open-sourced and available for free commercial, 
+educational or any other usage. The algorithm was developed for Duckiebot, but it can (but is not recommended to) be
+used as a baseline for real autonomous driving cars. However, this usage of the algorithm wasn't initially planned that's why I don't want to be responsible for any consequences of
+misusing my algorithm.
+\subsubsection{The Duckiebot}
+The Duckiebot can drive autonomously. So it can cause some legal issues if it bumps into something or someone. Even though the bot is small it can break something. 
+That is the reason why it should be run only under human control to prevent such accidents. 
+
+Also, the bot was provided for me by the University, so I'm responsible for its condition and possible damage, that's why running the bot without my control and permission 
+was and remains strongly prohibited. 
+\subsection{Summary}
+This section was written after the project was finished so it shows not only planning but also the resulting technologies and ideas that were used.
+As you can notice different approaches were considered and rejected, to fully satisfy the desired requirements. As it was said Agile wasn't intentionally used, 
+but anyway the project was finished on time and it met all the requirements. A lot of different tools and programming languages were used in this project.
+As it was said it is a research project that doesn't involve any people (besides me, the developer) and doesn't use unlicensed software, so it can't have any legal, 
+ethical or social issues.

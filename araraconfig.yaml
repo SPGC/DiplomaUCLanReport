@@ -1,0 +1,19 @@
+!config
+# Общие настройки для всех правил
+interact: batch
+verbose: yes
+
+# Правила сборки
+rules:
+  - name: xelatex
+    command: xelatex @{action} @{draft} @{options} "@{file}"
+    extensions: [ tex, ltx ]
+  - name: biber
+    command: biber @{verbose} @{input}
+    extensions: [ bcf ]
+  - name: makeglossaries
+    command: makeglossaries @{input}
+    extensions: [ acn, acr, alg, glg, glo, gls, idx, ilg, ind, ist, syg, xdy ]
+  - name: makeindex
+    command: makeindex @{input}.idx
+    extensions: [ idx ]

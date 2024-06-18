@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{pdfpages}
+\usepackage{titlesec}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{subfig}
+\usepackage{cite}
+\usepackage{titlesec}
+\usepackage{appendix}
+
+% Устанавливаем шрифты
+\setmainfont{Calibri}
+\setsansfont{Arial}
+\definecolor{header_blue}{HTML}{2f5496}
+\setcounter{secnumdepth}{4}
+
+\renewcommand{\Huge}{\fontsize{36pt}{40pt}\selectfont}
+\renewcommand{\normalsize}{\fontsize{11pt}{12pt}\selectfont}
+\renewcommand{\Large}{\fontsize{13pt}{14pt}\selectfont}
+\renewcommand{\huge}{\fontsize{18pt}{30pt}\selectfont}
+\renewcommand{\LARGE}{\fontsize{16pt}{30pt}\selectfont}
+\renewcommand{\large}{\fontsize{12pt}{13pt}\selectfont}
+
+% Изменение шрифта
+\renewcommand{\cftsecfont}{\normalfont} % Обычный шрифт для разделов
+
+% Добавление точек между названием главы и номером страницы
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % Заполнение точками между названием главы и номером страницы
+
+\renewcommand{\contentsname}{}
+\renewcommand{\listfigurename}{}
+\renewcommand{\cftfigpresnum}{Figure }
+\setlength{\cftfignumwidth}{4.5em}
+\renewcommand{\listtablename}{}
+
+
+\titleformat{\section}
+{\color{header_blue}\LARGE}{\thesection}{1em}{}
+\titleformat{\subsection}
+{\color{header_blue}\Large}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+{\color{header_blue}\Large}{\thesubsubsection}{1em}{}
+
+\titleformat{\subsubsubsection}[runin]{\normalfont\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}{0pt}{3.25ex plus 1ex minus .2ex}{1em}
+
+\begin{document}
+
+\includepdf[pages=1]{title_page.pdf} % Title page
+\newpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+\include{src/abstract/abstract}
+\include{src/Attestation/Attestation}
+\include{src/Acknowledgements/Acknowledgements}
+
+\section*{Table of Contents}
+\addcontentsline{toc}{section}{Table of Contents}
+\tableofcontents
+\newpage
+
+\section*{List of tables}
+\addcontentsline{toc}{section}{List of tables}
+\listoftables % Создание списка таблиц
+\newpage
+
+\section*{List of figures}
+\addcontentsline{toc}{section}{List of figures}
+\listoffigures % Создание списка рисунков
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\include{src/Introduction/Introduction}
+\include{src/BackgroundReading/main}
+\include{src/Project_planning/Project_planning}
+\include{src/Design/Design}
+\include{src/Implementation/Implementation}
+\include{src/Testing/Testing}
+\include{src/EvaluationConclusionsAndFutureWork/EvaluationConclusionsAndFutureWork}
+
+\bibliographystyle{apalike} % We choose the "plain" reference style
+\bibliography{refs} % Entries are in the refs.bib file
+\newpage
+\appendix
+\section{Appendix 1}
+\includepdf[pages=-]{plan.pdf} % Title page
+
+\end{document}

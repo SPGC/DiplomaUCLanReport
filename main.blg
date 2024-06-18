@@ -1,0 +1,61 @@
+This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+A level-1 auxiliary file: src/abstract/abstract.aux
+A level-1 auxiliary file: src/Attestation/Attestation.aux
+A level-1 auxiliary file: src/Acknowledgements/Acknowledgements.aux
+A level-1 auxiliary file: src/Introduction/Introduction.aux
+A level-1 auxiliary file: src/BackgroundReading/main.aux
+A level-1 auxiliary file: src/Project_planning/Project_planning.aux
+A level-1 auxiliary file: src/Design/Design.aux
+A level-1 auxiliary file: src/Implementation/Implementation.aux
+A level-1 auxiliary file: src/Testing/Testing.aux
+A level-1 auxiliary file: src/EvaluationConclusionsAndFutureWork/EvaluationConclusionsAndFutureWork.aux
+The style file: apalike.bst
+Database file #1: refs.bib
+Warning--entry type for "mit" isn't style-file defined
+--line 266 of file refs.bib
+Warning--empty journal in em_algo_2
+Warning--empty booktitle in knn
+You've used 33 entries,
+            1935 wiz_defined-function locations,
+            638 strings with 9185 characters,
+and the built_in function-call counts, 11399 in all, are:
+= -- 1102
+> -- 625
+< -- 20
++ -- 230
+- -- 214
+* -- 913
+:= -- 2131
+add.period$ -- 88
+call.type$ -- 33
+change.case$ -- 272
+chr.to.int$ -- 33
+cite$ -- 35
+duplicate$ -- 403
+empty$ -- 607
+format.name$ -- 263
+if$ -- 2120
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 10
+newline$ -- 156
+num.names$ -- 99
+pop$ -- 215
+preamble$ -- 1
+purify$ -- 272
+quote$ -- 0
+skip$ -- 350
+stack$ -- 0
+substring$ -- 505
+swap$ -- 41
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 198
+warning$ -- 2
+while$ -- 72
+width$ -- 0
+write$ -- 385
+(There were 3 warnings)

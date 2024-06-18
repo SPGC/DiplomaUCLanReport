@@ -1,0 +1,57 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces Old algorithm segmentation with different light conditions\relax }}{2}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Raw image of the road with the first light condition}}}{2}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Mask of the road with the first light condition}}}{2}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Raw image of the road with the second light condition}}}{2}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Mask of the road with the second light condition}}}{2}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Results of each step for high contrast and low contrast image\relax }}{4}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {raw image}}}{4}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {brightness map}}}{4}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {energy map}}}{4}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {scaled energy map}}}{4}%
+\contentsline {subfigure}{\numberline {(e)}{\ignorespaces {raw image}}}{4}%
+\contentsline {subfigure}{\numberline {(f)}{\ignorespaces {brightness map}}}{4}%
+\contentsline {subfigure}{\numberline {(g)}{\ignorespaces {energy map}}}{4}%
+\contentsline {subfigure}{\numberline {(h)}{\ignorespaces {scaled energy map}}}{4}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Masks provided by KNN algorithm\relax }}{5}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Raw image}}}{5}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Middle lane mask}}}{5}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Side lane mask}}}{5}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Road mask}}}{5}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Color distribution on images\relax }}{6}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Masks provided by EM algorithm\relax }}{7}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Raw image bad sample}}}{7}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Mask bad sample}}}{7}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Raw image good sample}}}{7}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Mask good sample}}}{7}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Architecture of fully connected NN with 3 layers\relax }}{8}%
+\contentsline {figure}{\numberline {7}{\ignorespaces ShuffleNet architecture\relax }}{9}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {ShuffleNet Bottleneck block}}}{9}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Shuffle layer}}}{9}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Squeeze-and-Excitation block architecture\relax }}{10}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Project architecture\relax }}{18}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Training pipeline\relax }}{19}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Deployment\relax }}{20}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Data visualisation\relax }}{21}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Algorithm visualisation\relax }}{24}%
+\contentsline {figure}{\numberline {14}{\ignorespaces The DL model architecture\relax }}{25}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Full model architecture}}}{25}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Basic block architecture}}}{25}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Computational graph\relax }}{26}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Visualisation of convolution layer parameters\relax }}{27}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Padding = 1}}}{27}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Dilation = 2}}}{27}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Stride = 2 (a)}}}{27}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Stride = 2 (b)}}}{27}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Dropout layer\relax }}{29}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Standard neural network}}}{29}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {After dropout}}}{29}%
+\contentsline {figure}{\numberline {18}{\ignorespaces SGD\relax }}{30}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {SGD without monmentum}}}{30}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {SGD with momentum}}}{30}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Code base\relax }}{32}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Output of the first run\relax }}{37}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Masks for different parts of the road\relax }}{43}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Raw image of the road with floor}}}{43}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Mask of the road with floor}}}{43}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Raw image of the road without floor}}}{43}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Mask of the road without floor}}}{43}%

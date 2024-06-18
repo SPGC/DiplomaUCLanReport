@@ -1,0 +1,14 @@
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+This report provides a description of the road marking recognition project.
+
+The Duckietown project uses a light-sensitive road marking recognition algorithm as a baseline. It is fast and consistent in constant light conditions. However when 
+the lightning changes (different weather, time or even just one broken lamp in the room) this algorithm should be adjusted by changing its config file. 
+It is a pretty suboptimal solution, which makes developers of the Duckietown project rebuild their solutions each time the light conditions are changed. 
+Assuming that the Duckietown project imitates real autonomous driving cars and the idea of the smart city, rebuilding the solution for autopilot because of the 
+change of the daytime doesn't look like a good imitation of the real system. So it was decided to create a new algorithm for detecting road markups, based on a deep learning 
+(DL) algorithm. This approach makes the algorithm light-independent.
+The report describes in detail the mathematical foundations of the algorithms used in the project, as well as a description of the overall design and implementation. 
+In addition, collecting and marking up the dataset for DL is described in this report.
+As a result, the algorithm was created and the dataset was published. This algorithm was tested in Joint Advanced Student School (JASS) 2024 by JetBrains and was pretty 
+successful.
